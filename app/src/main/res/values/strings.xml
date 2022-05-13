@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Memory</string>
+
+
+    <string name="hidden_emoji">❓</string>
+    <string name="opened_emoji">❤</string>
+
+    <string-array name="spinner_array">
+        <item >2*2</item>
+        <item >4*4</item>
+        <item >6*6</item>
+        <item   >8*8</item>
+    </string-array>
 </resources>

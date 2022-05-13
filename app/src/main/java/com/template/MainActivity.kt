@@ -1,11 +1,26 @@
 package com.template
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.template.databinding.ActivityMainBinding
+
+lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.mainStartGameButton.setOnClickListener {
+            startGame()
+        }
+    }
+
+    private fun startGame() {
+        val intent = Intent(this, GameActivity::class.java)
+        intent.putExtra("level", binding.mainSpinner.selectedItemId.toInt())
+        startActivity(intent)
     }
 }
