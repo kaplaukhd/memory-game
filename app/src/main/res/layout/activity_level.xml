@@ -4,6 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FinishActivity">
+    tools:context=".LevelActivity">
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/levelFlow"
+        app:flow_wrapMode="chain"
+        app:flow_verticalStyle="packed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

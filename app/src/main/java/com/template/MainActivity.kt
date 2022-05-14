@@ -13,13 +13,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.mainStartGameButton.setOnClickListener {
+
+        binding.mainStartGameSecondButton.setOnClickListener {
             startGame()
         }
     }
 
     private fun startGame() {
-        val intent = Intent(this, GameActivity::class.java)
+        val intent = Intent(this, GameActivitySecond::class.java)
         intent.putExtra("level", binding.mainSpinner.selectedItemId.toInt())
         startActivity(intent)
     }

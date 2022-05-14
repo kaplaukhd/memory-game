@@ -3,12 +3,45 @@
 
 
     <string name="hidden_emoji">❓</string>
-    <string name="opened_emoji">❤</string>
+
+    <string name="emoji_heart">❤</string>
+    <string name="emoji_hundred">💯</string>
+    <string name="emoji_dna">🧬</string>
+    <string name="emoji_mountain">🏔</string>
+    <string name="emoji_space">🛰</string>
+    <string name="emoji_game">🎮</string>
+    <string name="emoji_ball">🎱</string>
+    <string name="emoji_mellon">🍉</string>
+    <string name="emoji_rainbow">🌈</string>
+    <string name="emoji_clover">☘</string>
+    <string name="emoji_laptop">‍💻</string>
+    <string name="emoji_aircraft">✈</string>
+    <string name="emoji_q">⚽</string>
+    <string name="emoji_w">🎲</string>
+    <string name="emoji_e">🎇</string>
+    <string name="emoji_r">🗿</string>
+    <string name="emoji_t">🚦</string>
+    <string name="emoji_y">⚓</string>
+    <string name="emoji_u">⛲</string>
+    <string name="emoji_i">🎠</string>
+    <string name="emoji_o">🛕</string>
+    <string name="emoji_p">🔬</string>
+    <string name="emoji_a">🎉</string>
+    <string name="emoji_s">v</string>
+    <string name="emoji_d">♦</string>
+    <string name="emoji_f">⚜</string>
+    <string name="emoji_g">💈</string>
+    <string name="emoji_h">💣</string>
+    <string name="emoji_j">💎</string>
+    <string name="emoji_k">🎰</string>
+    <string name="emoji_l">🧩</string>
+    <string name="emoji_z">♟</string>
+    <string name="finish_time_txt">Your result</string>
 
     <string-array name="spinner_array">
-        <item >2*2</item>
-        <item >4*4</item>
-        <item >6*6</item>
-        <item   >8*8</item>
+        <item>2*2</item>
+        <item>4*4</item>
+        <item>6*6</item>
+        <item>8*8</item>
     </string-array>
 </resources>

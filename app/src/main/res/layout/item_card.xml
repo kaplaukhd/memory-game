@@ -17,24 +17,15 @@
 
         <TextView
             android:id="@+id/itemCardHidden"
-            android:layout_width="48dp"
-            android:layout_height="60dp"
+            android:layout_width="39dp"
+            android:layout_height="50dp"
             android:text="@string/hidden_emoji"
             android:autoSizeTextType="uniform"
             android:textColor="@color/black"
             android:background="@color/card_background_hidden"
             android:gravity="center"/>
 
-        <TextView
-            android:id="@+id/itemCardOpened"
-            android:layout_width="48dp"
-            android:layout_height="60dp"
-            android:text="@string/opened_emoji"
-            android:autoSizeTextType="uniform"
-            android:textColor="@color/black"
-            android:background="@color/card_background_opened"
-            android:gravity="center"
-            tools:targetApi="o" />
+
 
     </com.google.android.material.card.MaterialCardView>
 
