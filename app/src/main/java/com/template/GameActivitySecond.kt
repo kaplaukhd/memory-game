@@ -1,15 +1,18 @@
 package com.template
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.util.Log
 import android.view.View
 import android.widget.Chronometer
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.template.adapter.CardAdapter
@@ -24,27 +27,37 @@ lateinit var cards: ArrayList<CardSettings>
 private var emojies = GetEmoji().getEmoji()
 private var visibleCards = arrayListOf<Int>()
 lateinit var lm: GridLayoutManager
+
+@SuppressLint("StaticFieldLeak")
 lateinit var adapter: CardAdapter
 lateinit var gameSecondBinding: ActivityGameSecondBinding
+
+@SuppressLint("StaticFieldLeak")
 lateinit var time: Chronometer
 private var level: Int = 0
+private var currentLevel: Int = -1
 
 class GameActivitySecond : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         gameSecondBinding =
             ActivityGameSecondBinding.inflate(layoutInflater).also { setContentView(it.root) }
-        time = findViewById<Chronometer>(R.id.chronometer)
-        level = intent.getIntExtra("level", 0)
-        cards = arrayListOf<CardSettings>()
+        checkStage()
+        level = if (checkStage() == -1) {
+            intent.getIntExtra("level", 0)
+        } else {
+            checkStage()
+        }
+        time = findViewById(R.id.chronometer)
+        cards = arrayListOf()
         initGame()
         var clickable = true
 
 
         gameSecondBinding.gameRecycler.addOnItemTouchListener(RecyclerClickListener(
             gameSecondBinding.gameRecycler, object : CardClickListener {
+                @SuppressLint("NotifyDataSetChanged")
                 override fun cardClick(view: View, position: Int) {
-                    Log.d("SYSTEMALARM", "${time.text}")
                     if (clickable) {
                         if (!cards[position].cardIsVisible) {
                             cards[position].cardIsVisible = true
@@ -54,7 +67,7 @@ class GameActivitySecond : AppCompatActivity() {
                             if (visibleCards.size == 2) {
                                 val secondItem = visibleCards[1]
                                 clickable = false
-                                Handler().postDelayed({
+                                Handler(Looper.getMainLooper()).postDelayed({
                                     if (cards[itemOne].cardEmoji == cards[secondItem].cardEmoji) {
                                         cards[itemOne].cardIsMatch = true
                                         cards[secondItem].cardIsMatch = true
@@ -74,7 +87,22 @@ class GameActivitySecond : AppCompatActivity() {
             }))
     }
 
+    private fun checkStage(): Int {
+        val level = intent.getIntExtra("stageGame", -1)
+        val stage = intent.getIntExtra("stageLevel", -1)
+        Log.d("SYSTEMALARM", "level: $level , stage: $stage")
+        if (level == -1) {
+            gameSecondBinding.gameLevelItem.visibility = View.GONE
+            gameSecondBinding.gameLevelTxt.visibility = View.GONE
+        } else {
+            currentLevel = stage
+            gameSecondBinding.gameLevelItem.text = currentLevel.toString()
+        }
+        return level
+    }
+
     private fun initGame() {
+        gameSecondBinding.gameLevelItem.text = currentLevel.toString()
         setGrid()
         showEmoji()
         startTime()
@@ -86,14 +114,14 @@ class GameActivitySecond : AppCompatActivity() {
     }
 
     private fun showEmoji() {
-        for ((x, i) in cards.withIndex()) {
+        for ((x) in cards.withIndex()) {
             cards[x].cardIsVisible = true
             adapter.notifyItemChanged(x)
 
         }
 
-        Handler().postDelayed({
-            for ((x, i) in cards.withIndex()) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            for ((x) in cards.withIndex()) {
                 cards[x].cardIsVisible = false
                 adapter.notifyItemChanged(x)
             }
@@ -135,6 +163,7 @@ class GameActivitySecond : AppCompatActivity() {
 
         cards.shuffle()
         adapter = CardAdapter(this, cards)
+        adapter.setHasStableIds(true)
         gameSecondBinding.gameRecycler.setHasFixedSize(true)
         gameSecondBinding.gameRecycler.layoutManager = lm
         gameSecondBinding.gameRecycler.adapter = adapter
@@ -167,10 +196,41 @@ class GameActivitySecond : AppCompatActivity() {
         val homeBtn = dialog.findViewById<ImageButton>(R.id.finishBtnHome)
         val restartBtn = dialog.findViewById<ImageButton>(R.id.finishBtnRestart)
 
-        timeTxt.text = time
+        val nextBtn = dialog.findViewById<ImageButton>(R.id.finishNextBtn)
+        val nextLl = dialog.findViewById<LinearLayout>(R.id.finishNextLl)
+        val result = dialog.findViewById<TextView>(R.id.finishResultTxt)
+
+        if (currentLevel == -1) {
+            timeTxt.text = time
+            nextLl.visibility = View.GONE
+        } else {
+            timeTxt.visibility = View.GONE
+            result.text = "Level $currentLevel completed"
+            nextBtn.setOnClickListener {
+                currentLevel++
+                level = when {
+                    currentLevel < 9 -> {
+                        0
+                    }
+                    currentLevel < 18 -> {
+                        1
+                    }
+                    currentLevel < 27 -> {
+                        2
+                    }
+                    else -> {
+                        3
+                    }
+                }
+                initGame()
+                dialog.cancel()
+            }
+        }
+
 
         homeBtn.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
+            currentLevel = -1
             finish()
             dialog.cancel()
         }
@@ -183,6 +243,7 @@ class GameActivitySecond : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        currentLevel = -1
         cards.clear()
         finish()
     }

@@ -9,7 +9,8 @@ data class CardSettings(
 data class Emojies(
     val emoji: Int,
 )
-class GetEmoji(){
+
+class GetEmoji() {
     fun getEmoji(): ArrayList<Emojies> {
         val emoji = arrayListOf<Emojies>()
         emoji.add(Emojies(R.string.emoji_dna))
@@ -46,6 +47,8 @@ class GetEmoji(){
         emoji.add(Emojies(R.string.emoji_z))
         return emoji
     }
+
+
 }
 
 

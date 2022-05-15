@@ -17,6 +17,9 @@ class MainActivity : AppCompatActivity() {
         binding.mainStartGameSecondButton.setOnClickListener {
             startGame()
         }
+        binding.mainStartGameButton.setOnClickListener {
+            startActivity(Intent(this, LevelActivity::class.java))
+        }
     }
 
     private fun startGame() {

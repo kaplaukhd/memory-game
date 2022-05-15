@@ -22,6 +22,8 @@ class CardAdapter(
         return CardViewHolder(view)
     }
 
+    override fun getItemId(position: Int): Long = position.toLong()
+
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val item = dataset[position]
 
@@ -43,7 +45,7 @@ class CardAdapter(
     override fun getItemCount(): Int = dataset.size
 
     class CardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val card = view.findViewById<TextView>(R.id.itemCardHidden)
+        val card: TextView = view.findViewById<TextView>(R.id.itemCardHidden)
     }
 
 

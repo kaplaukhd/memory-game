@@ -4,14 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFE0B2"
     tools:context=".LevelActivity">
 
-    <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/levelFlow"
-        app:flow_wrapMode="chain"
-        app:flow_verticalStyle="packed"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/levelRecycler"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:padding="15dp"
+      app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+      app:spanCount="9"
+      tools:itemCount="36"
+      tools:listitem="@layout/level_button"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
